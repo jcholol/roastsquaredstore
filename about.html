@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>About</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <style>
+        #output{
+            clear:both;
+        }
+
+        #checkoutDiv{
+            display:none;
+        }
+        .footer{
+            background-color:darkgray;
+            color:white;
+            margin-top: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="headerTop">
+            <div id="checkoutDiv" class="container">
+                <div class="row">
+                    <div class="col-md-6 text-xs-right">
+                        <span class="items" ></span>
+                        items
+                        <!--<span class="total"></span><small></small> -->
+                    </div>
+                    <div class="col-md-6 text-xs-right">
+                        <span class="btn btn-success" data-toggle="modal" data-target="#cart">
+                            Open Shopping Cart
+                        </span>
+                        <a href="checkout.html" class="btn btn-primary">
+                            Proceed to checkout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="headerBot"> 
+            <div class="container">
+                <nav class="navbar navbar-full navbar-dark bg-inverse">
+                    <button class="navbar-toggler light float-xs-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#nvbar"></button>
+                    <div id="nvbar" class="collapse navbar-toggleable-xs">
+                        <ul class="nav navbar-nav float-sm-left">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="index.html">RoastSquared</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav float-sm-right"> 
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="about.html">About</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="products.html">Products</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+    <!-- Know what part of the content is changing-->
+    <div class="content">
+        <div class="container">
+            <p>        
+                Welcome to RoastSquared, your number one source for all things [product]. We're dedicated to giving you the very best of [product], with a focus on [store characteristic 1], [store characteristic 2], [store characteristic 3].
+                <br>
+                <br>
+                Founded in [year] by [founder name], RoastSquared has come a long way from its beginnings in [starting location]. When [founder name] first started out, [his/her/their] passion for [brand message - e.g. "eco-friendly cleaning products"] drove them to [action: quit day job, do tons of research, etc.] so that RoastSquared can offer you [competitive differentiator - e.g. "the world's most advanced toothbrush"]. We now serve customers all over [place - town, country, the world], and are thrilled that we're able to turn our passion into [my/our] own website.
+                <br>
+                <br>
+                [I/we] hope you enjoy [my/our] products as much as [I/we] enjoy offering them to you. If you have any questions or comments, please don't hesitate to contact [me/us].
+                <br>
+                <br>
+                Sincerely,
+                <br>
+                [Jonathan]</p>   
+        </div>
+    </div> 
+    </header>
+</body>
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-xs-center">
+            &copy;YC 2022
+        </p>
+    </div>
+</footer>
+
+<!-- Modals -->
+<div>
+    <div class="modal fade" id="cart" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        Shopping Cart
+                    </h4>
+                </div>                    
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <thead class="thead-inverse">
+                            <tr>
+                                <th> Qty </th>
+                                <th> Item Name </th>
+                                <th> Cost </th>
+                                <th class="text-xs-right"> Subtotal </th>
+                            </tr>
+                        </thead>
+                        <tbody id="output">
+
+                        </tbody>
+                    </table>
+                </div>                    
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">
+                        Continue Shopping
+                    </button>
+                    <a href="checkout.html" class="btn btn-primary">
+                        Proceed to Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+<script>
+    var shoppingCart = [];
+    $(document).ready(function(){
+        outputCart();
+        $(".productItem").click(function (e){
+            e.preventDefault();
+
+            var iteminfo = $(this.dataset)[0];
+            iteminfo.qty = 1;
+
+            var itemInCart = false;
+
+            $.each(shoppingCart,function(index, value){
+                if(value.id == iteminfo.id){
+                    value.qty = parseInt(value.qty) + parseInt(iteminfo.qty);
+                    itemInCart = true;
+                }
+            })
+            
+            if(!itemInCart){
+                shoppingCart.push(iteminfo);
+            }
+
+            sessionStorage["shoppingCart"] = JSON.stringify(shoppingCart);
+            outputCart();
+        })
+
+
+        function outputCart(){
+            //update our shopping cart value
+            if (sessionStorage["shoppingCart"] != null)
+            {
+                shoppingCart = JSON.parse(sessionStorage["shoppingCart"].toString());
+                console.log(sessionStorage["shoppingCart"]);
+                $("#checkoutDiv").show();
+            }
+            
+            var holderHTML = "";
+            var totalCost = 0; 
+            var itemCount = 0;
+            $.each(shoppingCart,function(index, value){
+                console.log(value);
+                var subTotal = (value.qty * value.price);
+                totalCost += subTotal; 
+                itemCount += parseInt(value.qty);
+                holderHTML += '<tr><td>' + value.qty + '</td><td>#' + value.id + ' ' + 
+                    value.name + '(' + value.s + ')</td><td>' + formatCost(value.price) + 
+                        '</td><td class="text-xs-right">' + formatCost(subTotal) + '</td>'
+            })
+            holderHTML += '<tr><td colspan="3" class="text-xs-right">Total Cost:</td><td class="text-xs-right"> ' + formatCost(totalCost) + '</td></tr>'
+            $('#output').html(holderHTML);
+            $(".total").html(formatCost(totalCost));
+            $(".items").html(itemCount);
+
+        }
+
+        function formatCost(cost){
+            return '$' + (cost/100).toFixed(2);
+        }
+    })
+</script>
+</body>
+
+</html>

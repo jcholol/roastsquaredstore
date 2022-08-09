@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <style>
+        input[type = "number"]{
+            width:50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Shopping Checkout</h1>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+            <input type="hidden" name="cmd" value="_cart">
+            <input type="hidden" name="upload" value="1">
+            <input type="hidden" name="business" value="seller@dezignerfotos.com">
+
+        <table class="table table-hover">
+            <thead class="thead-inverse">
+                <tr>
+                    <th> Qty </th>
+                    <th> Item Name </th>
+                    <th> Cost </th>
+                    <th class="text-xs-right"> Subtotal </th>
+                </tr>
+            </thead>
+            <tbody id="output">
+
+            </tbody>
+        </table>
+
+            <input type="submit" class="btn btn-primary btn-block" value="Checkout with PayPal">
+            <a href="products.html" class="btn btn-success"> Continue Shopping</a>
+        </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        var shoppingCart = [];
+        $(document).ready(function(){
+            outputCart();
+            $('#output').on('change keyup','.dynqua', function(){
+                var iteminfo = $(this.dataset)[0];
+
+                var itemInCart = false;
+                console.log(shoppingCart);
+                
+                var qty = $(this).val();
+                
+                if (qty <0) { 
+                    qty = 0;
+                    $(this).val(0);
+                }
+                $.each(shoppingCart,function(index, value){
+                    if(value.id == iteminfo.id){
+                        shoppingCart[index].qty = qty;
+                        itemInCart = true;
+                    }
+                })
+
+                sessionStorage["shoppingCart"] = JSON.stringify(shoppingCart);
+                //outputCart();
+
+
+                console.log($(this).val());
+            })
+            function outputCart(){
+                //update our shopping cart value
+                if (sessionStorage["shoppingCart"] != null)
+                {
+                    shoppingCart = JSON.parse(sessionStorage["shoppingCart"].toString());
+                }
+                
+                var holderHTML = "";
+                var totalCost = 0; 
+                var itemCount = 0;
+                $.each(shoppingCart,function(index, value){
+                    console.log(index);
+                    var subTotal = (value.qty * value.price);
+                    var a = (index + 1);
+                    totalCost += subTotal; 
+                    itemCount += parseInt(value.qty);
+                    holderHTML += '<tr><td><input type="number" class="dynqua" name="quantity_' + a + '" value="' + value.qty +
+                        '"data-id="' + value.id + '"></td><td><input type="hidden" name="item_name_' + a + '" value="' + value.name + ' ' + value.s + ' ">' + 
+                        value.name + '(' + value.s + ')</td><td><input type="hidden" name="amount_' + a + '" value="' + formatCost(value.price) + '"> $' +
+                         formatCost(value.price) + '</td><td class="text-xs-right">' + formatCost(subTotal) + '</td>'
+                })
+                holderHTML += '<tr><td colspan="3" class="text-xs-right">Total Cost:</td><td class="text-xs-right"> ' + formatCost(totalCost) + '</td></tr>'
+                $('#output').html(holderHTML);
+            }
+            
+            function formatCost(cost){
+                return (cost/100).toFixed(2);
+            }
+        })
+    </script>
+</body> 
