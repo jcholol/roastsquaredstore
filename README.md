@@ -1,6 +1,6 @@
 # Personal Project | RoastSquared Store
 
-[Application](Roastsquaredstore-env.eba-emynqmh3.us-west-2.elasticbeanstalk.com)
+[Application](http://Roastsquaredstore-env.eba-emynqmh3.us-west-2.elasticbeanstalk.com/)
 
 [Online Demo Link](https://jcholol.github.io/roastsquaredstore/index.html)
 
